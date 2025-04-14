@@ -5,10 +5,12 @@ import os
 from datetime import datetime
 
 def extract_ids_from_url(url):
-    product_id_match = re.search(r"-p(\d+)", url)
+    product_ids = re.findall(r"-p(\d+)", url)
     spid_match = re.search(r"spid=(\d+)", url)
-    if product_id_match and spid_match:
-        return int(product_id_match.group(1)), int(spid_match.group(1))
+    if product_ids and spid_match:
+        product_id = int(product_ids[-1])  # lấy cái cuối cùng
+        spid = int(spid_match.group(1))
+        return product_id, spid
     else:
         raise ValueError("Không tìm được product_id hoặc spid từ URL.")
 
@@ -67,7 +69,7 @@ def get_reviews(product_id, spid, seller_id, save_path):
                 datas = res.json()
                 print(f"Đang lấy trang {page}/{total_pages}")
                 for data in datas['data']:
-                    if data["content"].strip():
+                    if data["content"].strip() and data["created_by"] is not None:
                         review = {
                             "product_id": product_id,
                             "spid": spid,
