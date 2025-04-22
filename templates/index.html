@@ -1,13 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-    <title>Nhập link Shopee</title>
+    <meta charset="UTF-8">
+    <title>Phân Tích Đánh Giá Sản Phẩm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f6f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 100px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input[type="text"] {
+            width: 400px;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 25px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </head>
 <body>
-    <h2>Nhập link sản phẩm Shopee</h2>
-    <form method="post">
-        <input type="text" name="shopee_url" placeholder="Dán link Shopee ở đây..." style="width: 400px;" required>
-        <button type="submit">Gửi</button>
-    </form>
+<!-- Loader -->
+<div id="loader-overlay">
+    <div class="loader"></div>
+</div>
+
+<h1>Phân Tích Đánh Giá Sản Phẩm</h1>
+<form method="POST">
+    <input type="text" name="product_link" placeholder="Nhập link sản phẩm..." required>
+    <br>
+    <button type="submit">Phân tích</button>
+</form>
 </body>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', function () {
+            document.getElementById('loader-overlay').style.display = 'flex';
+        });
+    }
+});
+</script>
 </html>
