@@ -2,43 +2,237 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phân Tích Đánh Giá Sản Phẩm</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #3a86ff;
+            --primary-dark: #2667cc;
+            --primary-light: #e6f0ff;
+            --accent: #ff6b6b;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-bg: #f8f9fa;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            --transition: all 0.25s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f6f6f6;
+            font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            color: var(--dark);
+            min-height: 100vh;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            margin-top: 100px;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Background Shapes */
+        .background-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-light), rgba(58, 134, 255, 0.2));
+            opacity: 0.5;
+        }
+
+        .shape:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: -100px;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .shape:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            bottom: -50px;
+            right: -50px;
+            animation: float 18s ease-in-out infinite reverse;
+        }
+
+        .shape:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            bottom: 100px;
+            left: 15%;
+            animation: float 20s ease-in-out infinite 2s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-20px) scale(1.05) rotate(5deg);
+            }
+            100% {
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 550px;
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+        }
+
+        .container:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
         }
 
         h1 {
-            color: #333;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 10px;
+        }
+
+        .subtitle {
+            color: var(--gray);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            transition: var(--transition);
         }
 
         input[type="text"] {
-            width: 400px;
-            padding: 10px;
-            font-size: 16px;
-            margin-top: 20px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+            width: 100%;
+            padding: 0.9rem 1rem 0.9rem 2.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--light-bg);
         }
 
-        button {
-            margin-top: 20px;
-            padding: 10px 25px;
-            font-size: 16px;
-            background-color: #007bff;
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.1);
+        }
+
+        input[type="text"]:focus + .input-icon {
+            color: var(--primary);
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 0.9rem;
+            background: var(--primary);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: 600;
             cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
 
-        button:hover {
-            background-color: #0056b3;
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(58, 134, 255, 0.3);
+        }
+
+        .btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        .btn-icon {
+            margin-right: 8px;
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature i {
+            color: var(--primary);
         }
 
         #loader-overlay {
@@ -47,53 +241,143 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.85);
             z-index: 9999;
             display: none;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
         }
 
         .loader {
-            border: 8px solid #f3f3f3;
-            border-top: 8px solid #3498db;
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
             border-radius: 50%;
-            width: 60px;
-            height: 60px;
+            border-top: 5px solid var(--primary);
+            border-right: 5px solid transparent;
             animation: spin 1s linear infinite;
         }
 
+        .loading-text {
+            margin-top: 1rem;
+            font-size: 1rem;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
         @keyframes spin {
-            0% {
-                transform: rotate(0deg);
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 2rem;
             }
-            100% {
-                transform: rotate(360deg);
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .features {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
     </style>
 </head>
 <body>
-<!-- Loader -->
-<div id="loader-overlay">
-    <div class="loader"></div>
-</div>
+    <!-- Background Bubble Shapes -->
+    <div class="background-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
 
-<h1>Phân Tích Đánh Giá Sản Phẩm</h1>
-<form method="POST">
-    <input type="text" name="product_link" placeholder="Nhập link sản phẩm..." required>
-    <br>
-    <button type="submit">Phân tích</button>
-</form>
-</body>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.querySelector('form');
-    if (form) {
-        form.addEventListener('submit', function () {
-            document.getElementById('loader-overlay').style.display = 'flex';
+    <!-- Loader -->
+    <div id="loader-overlay">
+        <div class="loader"></div>
+        <p class="loading-text">Đang phân tích dữ liệu...</p>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Phân Tích Đánh Giá Sản Phẩm</h1>
+            <p class="subtitle">Cung cấp thông tin chi tiết về phản hồi của khách hàng</p>
+        </header>
+
+        <form method="POST">
+            <div class="input-wrapper">
+                <input type="text" name="product_link" id="product_link" placeholder="Nhập link sản phẩm..." required>
+                <i class="fas fa-link input-icon"></i>
+            </div>
+
+            <button type="submit" class="btn">
+                <i class="fas fa-chart-bar btn-icon"></i>
+                Phân tích ngay
+            </button>
+        </form>
+
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-check-circle"></i>
+                <span>Phân tích nhanh chóng</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-chart-pie"></i>
+                <span>Báo cáo chi tiết</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-lightbulb"></i>
+                <span>Đề xuất cải thiện</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const loaderOverlay = document.getElementById('loader-overlay');
+        const inputField = document.getElementById('product_link');
+
+        // Input animation
+        inputField.addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
         });
-    }
-});
-</script>
+
+        inputField.addEventListener('blur', function() {
+            if (!this.value) {
+                this.parentElement.classList.remove('focused');
+            }
+        });
+
+        // Form submission
+        if (form) {
+            form.addEventListener('submit', function() {
+                loaderOverlay.style.display = 'flex';
+
+                // Add loading dots animation with lighter implementation
+                const loadingText = document.querySelector('.loading-text');
+                let dots = 0;
+                const loadingInterval = setInterval(() => {
+                    dots = (dots + 1) % 4;
+                    loadingText.textContent = 'Đang phân tích dữ liệu' + '.'.repeat(dots);
+                }, 600); // Slowed down to reduce processing
+
+                // Store the interval ID
+                window.loadingInterval = loadingInterval;
+            });
+        }
+
+        // Animation for background shapes - with slower, more performance-friendly settings
+        const shapes = document.querySelectorAll('.shape');
+        shapes.forEach((shape, index) => {
+            // Add different delay to each shape
+            const randomDelay = index * 2; // More spaced out than original
+            shape.style.animationDelay = `${randomDelay}s`;
+        });
+    });
+    </script>
+</body>
 </html>

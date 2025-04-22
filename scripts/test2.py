@@ -25,3 +25,4 @@ df['prediction'] = model.predict(X)
 print("📝 Nội dung đánh giá:")
 print(df['content'].iloc[0])
 print("\n🔍 Dự đoán của mô hình:", "Tích cực" if df['prediction'].iloc[0] == 1 else "Trung lập" if df['prediction'].iloc[0] == -1 else "Tiêu cực")
+
