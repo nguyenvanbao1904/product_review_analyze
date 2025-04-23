@@ -2,15 +2,20 @@ import pandas as pd
 import joblib
 from services.preprocessing.utils import clean_text_input
 
+# Redefine scale_rating to ensure it's available
+def scale_rating(x):
+    alpha = 0.1
+    return x * alpha
+
 # Đánh giá giả lập: 5 sao nhưng chê thậm tệ
 sample_review = {
-    "content": "Sản phẩm tệ kinh khủng. Vừa mở hộp đã hỏng, giao hàng trễ, chăm sóc khách hàng tệ hại, tôi rất thất vọng.",
+    "content": "Bình thường",
     "thank_count": 0,
     "purchased": True,
     "total_review": 3,
     "is_photo": False,
     "review_gap": 2,
-    "rating": 4
+    "rating": 5
 }
 
 # Tạo DataFrame

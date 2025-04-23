@@ -68,8 +68,4 @@ def is_gibberish(text):
     if unique_ratio < 0.3:
         return True
 
-    # Nếu toàn là chuỗi không có nguyên âm (a, e, i, o, u) → rác
-    if not re.search(r'[aeiouáéíóúăâêôơư]', text):
-        return True
-
     return False

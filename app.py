@@ -23,6 +23,10 @@ def get_recommendation(label_counts):
     else:
         return "🤔 Chưa đủ thông tin để đưa ra quyết định."
 
+def scale_rating(x):
+    alpha = 0.1
+    return x * alpha
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
@@ -57,11 +61,11 @@ def index():
             # Đưa 1 vài ví dụ
             examples = {
                 "positive": df[df['prediction'] == 1]["content"].sample(
-                    min(5, df[df['prediction'] == 1].shape[0])).tolist(),
+                    min(4, df[df['prediction'] == 1].shape[0])).tolist(),
                 "neutral": df[df['prediction'] == -1]["content"].sample(
-                    min(3, df[df['prediction'] == -1].shape[0])).tolist(),
+                    min(4, df[df['prediction'] == -1].shape[0])).tolist(),
                 "negative": df[df['prediction'] == 0]["content"].sample(
-                    min(3, df[df['prediction'] == 0].shape[0])).tolist()
+                    min(4, df[df['prediction'] == 0].shape[0])).tolist()
             }
 
             return render_template(
