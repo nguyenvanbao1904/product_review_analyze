@@ -89,8 +89,13 @@ def get_reviews(product_id, spid, seller_id, save_path):
                 print(f"Lỗi {res.status_code} khi lấy trang {page}")
                 break
 
-        # Sau vòng for: ghi một lần
+
         df = pd.DataFrame(reviews)
+        # Tạo thư mục nếu chưa tồn tại
+        save_dir = os.path.dirname(save_path)
+        if save_dir and not os.path.exists(save_dir):
+            os.makedirs(save_dir)
+
         if not os.path.exists(save_path):
             df.to_csv(save_path, index=False, mode='w', encoding='utf-8-sig', header=True)
         else:
@@ -110,7 +115,6 @@ if __name__ == "__main__":
         print(f"Extracted product_id = {product_id}, spid = {spid}")
         print(f"seller_id = {seller_id}")
 
-        os.makedirs("../../data", exist_ok=True)
         file_path = "../../data/test_data.csv"
 
         get_reviews(product_id, spid, seller_id, file_path)

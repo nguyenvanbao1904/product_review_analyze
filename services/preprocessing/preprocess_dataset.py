@@ -1,9 +1,11 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+
 
 from services.preprocessing.utils import clean_text, load_abbreviations, load_stopwords
 
-df = pd.read_csv("../data/tiki_reviews_dataset.csv")
+df = pd.read_csv("../../data/tiki_reviews_dataset.csv")
 
 # Bo luon cot title vi no dua vao so sao nen khong co y nghia nhieu
 df.drop(columns=['title'], inplace=True)
@@ -41,7 +43,6 @@ print("Du lieu sau khi xu ly missing_data")
 print(len(df))
 print(df.isnull().sum())
 # ---Chuan hoa du lieu
-
 abbreviations_dict = load_abbreviations()
 stopwords = load_stopwords()
 

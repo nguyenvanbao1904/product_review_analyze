@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
 
 from services.preprocessing.utils import clean_text_input
 from services.scraping.tiki_reviews_scraper_detail import extract_ids_from_url, get_seller_id, get_reviews
@@ -14,17 +14,17 @@ def get_recommendation(label_counts):
     positive_ratio = label_counts.get(1, 0)
     negative_ratio = label_counts.get(0, 0)
 
-    if positive_ratio >= 75 and negative_ratio <= 10:
-        return "✅ Khuyến nghị mua: Sản phẩm được yêu thích và đáng để mua."
-    elif positive_ratio >= 60 and positive_ratio < 75:
-        return "⚠️ Cân nhắc: Cần phân tích kỹ các đánh giá tiêu cực và trung lập."
-    elif positive_ratio < 60 or negative_ratio > 25:
-        return "❌ Không khuyến nghị mua: Sản phẩm có thể có vấn đề nghiêm trọng."
+    if positive_ratio >= 80 and negative_ratio <= 10:
+        return "Khuyến nghị mua: Sản phẩm được yêu thích và đáng để mua."
+    elif positive_ratio < 65 or negative_ratio > 30:
+        return "Không khuyến nghị mua: Sản phẩm có thể có vấn đề nghiêm trọng."
+    elif positive_ratio >= 65 and negative_ratio <= 30:
+        return "Cân nhắc: Cần phân tích kỹ các đánh giá tiêu cực và trung lập."
     else:
-        return "🤔 Chưa đủ thông tin để đưa ra quyết định."
+        return "Chưa đủ thông tin để đưa ra quyết định."
 
 def scale_rating(x):
-    alpha = 0.1
+    alpha = 0.05
     return x * alpha
 
 @app.route("/", methods=["GET", "POST"])
